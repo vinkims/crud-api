@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const Product = require('./models/productModel');
 const app = express();
 
+require('dotenv').config();
+
 app.use(express.json());
 
 // routes
@@ -74,13 +76,13 @@ app.delete('/product/:id', async (req, res) => {
 })
 
 mongoose
-  .connect('mongodb+srv://vinny:GYbQ-75pDaeaJbC@cluster0.c3u8q.mongodb.net/Crud-API?retryWrites=true&w=majority')
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log('Connected to MongoDB');
     app.listen(3000, () => {
       console.log('CRUD Api app is running on port 3000')
     });
   })
-  .catch(() => {
+  .catch((error) => {
     console.log(error);
   })
